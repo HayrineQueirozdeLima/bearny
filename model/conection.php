@@ -1,6 +1,6 @@
 <?php
 class Conection{
-    public function conectar()
+    public static function conectar()
     {
         $servername = "localhost";
         $username = "root";
