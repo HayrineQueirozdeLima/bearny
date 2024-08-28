@@ -2,8 +2,7 @@
 require_once("model/user.php");
 
 class UserController {
-    public function processa($acao){
-        if($acao == "C"){
+    public function cadastrar(){
             $novoUsuario = new User($_POST['nome'],
                                     $_POST['email'],
                                     $_POST['senha'],
@@ -11,6 +10,5 @@ class UserController {
                                     $_POST['idade'],
                                     $_POST['altura']);
             $novoUsuario->cadastraUsuario();
-        }
     }
 }
