@@ -1,13 +1,6 @@
-<!-- login.php -->
 <?php
 // Inicia a sessão
 session_start();
-
-// Verifica se o usuário já está logado
-if (isset($_SESSION["user_id"])) {
-    header("Location: dashboard.php");
-    exit();
-}
 
 // Inclui a conexão com o banco de dados
 include 'db_connect.php';
@@ -36,9 +29,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Verifica a senha
             if (password_verify($password, $hashed_password)) {
-                // Armazena dados na sessão e redireciona para o dashboard
+                // Armazena dados na sessão
                 $_SESSION["user_id"] = $id;
-                header("Location: dashboard.php");
+
+                // Verifica se o perfil do usuário está completo
+                $stmt = $conn->prepare("SELECT COUNT(*) FROM user_profile WHERE user_id = ?");
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+                $stmt->bind_result($profile_count);
+                $stmt->fetch();
+                $stmt->close();
+
+                // Se o perfil estiver preenchido, redireciona para o dashboard, caso contrário, redireciona para o profile.php
+                if ($profile_count > 0) {
+                    header("Location: dashboard.php");
+                } else {
+                    header("Location: profile.php");
+                }
                 exit();
             } else {
                 $error = "Senha incorreta.";

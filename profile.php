@@ -11,6 +11,8 @@ if (!isset($_SESSION["user_id"])) {
 // Inclui a conexão com o banco de dados
 include 'db_connect.php';
 
+$user_id = $_SESSION["user_id"];
+
 // Inicializa variáveis de erro e sucesso
 $success = "";
 $error = "";
@@ -19,39 +21,28 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim($_POST["name"]);
     $birthdate = $_POST["birthdate"];
-    $weight = floatval($_POST["weight"]);
-    $height = floatval($_POST["height"]);
+    $weight = $_POST["weight"];
+    $height = $_POST["height"];
     $activity_level = $_POST["activity_level"];
     $sex = $_POST["sex"];
-    $user_id = $_SESSION["user_id"];
 
     // Validação básica
     if (empty($name) || empty($birthdate) || empty($weight) || empty($height) || empty($activity_level) || empty($sex)) {
         $error = "Por favor, preencha todos os campos.";
     } else {
-        // Verifica se o perfil já existe
-        $stmt = $conn->prepare("SELECT id FROM user_profile WHERE user_id = ?");
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if ($stmt->num_rows > 0) {
-            // Atualiza o perfil existente
-            $stmt = $conn->prepare("UPDATE user_profile SET name = ?, birthdate = ?, weight = ?, height = ?, activity_level = ?, sex = ? WHERE user_id = ?");
-            $stmt->bind_param("ssddssi", $name, $birthdate, $weight, $height, $activity_level, $sex, $user_id);
-            $success = "Perfil atualizado com sucesso!";
+        // Insere ou atualiza o perfil do usuário
+        $stmt = $conn->prepare("INSERT INTO user_profile (user_id, name, birthdate, weight, height, activity_level, sex, created_at) VALUES (?, ?,?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("issddss", $user_id, $name, $birthdate, $weight, $height, $activity_level, $sex);
+        if ($stmt->execute()) {
+            $success = "Perfil salvo com sucesso!";
+            header("Location: dashboard.php");
+            exit();
         } else {
-            // Insere o novo perfil no banco de dados
-            $stmt = $conn->prepare("INSERT INTO user_profile (user_id, name, birthdate, weight, height, activity_level, sex) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("issddss", $user_id, $name, $birthdate, $weight, $height, $activity_level, $sex);
-            $success = "Perfil criado com sucesso!";
-        }
-
-        if (!$stmt->execute()) {
-            $error = "Ocorreu um erro ao salvar o perfil. Tente novamente.";
+            $error = "Ocorreu um erro ao salvar seu perfil. Tente novamente.";
         }
         $stmt->close();
     }
+
     $conn->close();
 }
 ?>
