@@ -1,3 +1,4 @@
+<!-- reports.php -->
 <?php
 session_start();
 include 'db_connect.php';
@@ -26,7 +27,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios - Bearny</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">

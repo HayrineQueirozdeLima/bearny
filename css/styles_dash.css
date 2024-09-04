@@ -1,0 +1,75 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.dashboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header {
+    text-align: center;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+}
+
+.dashboard-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.profile-info h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #4CAF50;
+}
+
+.profile-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.dashboard-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.dashboard-actions .btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.dashboard-actions .btn:hover {
+    background-color: #45a049;
+}

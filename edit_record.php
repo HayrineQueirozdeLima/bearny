@@ -1,3 +1,4 @@
+<!-- edit_record.php -->
 <?php
 // Inicia a sessão
 session_start();

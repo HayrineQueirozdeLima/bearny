@@ -1,3 +1,4 @@
+<!-- dashboard.php -->
 <?php
 //inicia a sessão
 session_start();
@@ -60,28 +61,40 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Bearny</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles_dash.css">
 </head>
 <body>
-    <div class="container">
-    <?php if ($row): ?>
-            <?php if ($sex === 'Feminino'): ?>
-                <h2>Bem-vinda, <?php echo htmlspecialchars($name); ?>!</h2>
-            <?php else: ?>
-                <h2>Bem-vindo, <?php echo htmlspecialchars($name); ?>!</h2>
-            <?php endif; ?>
-            <p>Idade: <?= htmlspecialchars($age) ?></p>
-            <p>Peso: <?= htmlspecialchars($weight) ?> kg</p>
-            <p>Altura: <?= htmlspecialchars($height) ?> cm</p>
-            <p>IMC Atual: <?= number_format($imc, 2) ?></p>
-            <p>TMB: <?= number_format($tmb, 2) ?> kcal</p>
-            <p>Déficit Calórico: <?= number_format($deficit_calories, 2) ?> kcal</p>
-            <p>Superávit Calórico: <?= number_format($surplus_calories, 2) ?> kcal</p>
+    <div class="dashboard-container">
+        <?php if ($row): ?>
+            <div class="dashboard-header">
+                <?php if ($sex === 'Feminino'): ?>
+                    <h2>Bem-vinda, <?php echo htmlspecialchars($name); ?>!</h2>
+                <?php else: ?>
+                    <h2>Bem-vindo, <?php echo htmlspecialchars($name); ?>!</h2>
+                <?php endif; ?>
+            </div>
+                
+            <div class="dashboard-content">
+                <div class="proile-info">
+                    <h2>Seu Perfil</h2>
+                    <p>Com <?= htmlspecialchars($age) ?> anos</p>
+                    <p>Pesando <?= htmlspecialchars($weight) ?> kg</p>
+                    <p>Medindo <?= htmlspecialchars($height) ?> cm de altura</p>
+                    <p>Nível de atividade física: <?= htmlspecialchars($activity_level) ?></p>
+                    <p>Seu Índice de Massa Corporal atual é <?= number_format($imc, 2) ?></p>
+                    <p>Sua Taxa Metabólica Basal atual(quantidade de calorias que seu corpo gasta para se manter vivo) é <?= number_format($tmb, 2) ?> kcal por dia</p>
+                    <p>Déficit Calórico de 500 calorias para perca de peso: <?= number_format($deficit_calories, 2) ?> kcal por dia</p>
+                    <p>Superávit Calórico de 500 calorias para ganho de peso: <?= number_format($surplus_calories, 2) ?> kcal por dia</p>
+                </div>
+            </div>
         <?php else: ?>
             <p>Nenhum dado disponível.</p>
         <?php endif; ?>
-        <a href="profile.php">Editar Perfil</a> | 
-        <a href="reports.php">Relatórios</a>
+        <div class="dashboard-actions">
+            <a href="profile.php" class="btn">Editar Perfil</a>  
+            <a href="reports.php" class="btn">Relatórios</a>
+            <a href="logout.php" class="btn">Logout</a>
+        </div>
     </div>
 </body>
 </html>

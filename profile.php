@@ -1,3 +1,4 @@
+<!-- proile.php -->
 <?php
 // Inicia a sessão
 session_start();
@@ -95,6 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
 
             <button type="submit">Salvar</button>
+            <button><a href="reports.php" class="a_button">Relatórios</a></button>
+            <button><a href="dashboard.php" class="a_button">Voltar ao Dashboard</a></button>
+            <button><a href="logout.php" class="a_button">Logout</a></button>
         </form>
     </div>
 </body>
